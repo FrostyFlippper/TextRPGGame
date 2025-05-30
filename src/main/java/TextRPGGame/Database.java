@@ -1,6 +1,8 @@
 package TextRPGGame;
 
 import TextRPGGame.Util.FileUtil;
+import TextRPGGame.Util.Logger.Logger;
+import TextRPGGame.Util.Logger.LoggingLevel;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -20,14 +22,16 @@ public final class Database {
     public static void initialise(){
         try {
             Files.createDirectories(APPDATA_PATH);
+            Logger.log("Created appdata directory", LoggingLevel.INFO);
             if(Files.notExists(DATABASE_PATH)){
                 Files.createFile(DATABASE_PATH);
+                Logger.log("Created database file; didnt exist", LoggingLevel.INFO);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         connectToSQLite();
-
+        Logger.log("Database initialised", LoggingLevel.INFO);
     }
 
     public static void connectToSQLite(){
